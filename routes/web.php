@@ -16,9 +16,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 
-Route::get('/dashboard', function () {
-    return view('dashboard');
-})->middleware(['auth', 'verified'])->name('dashboard');
+// Route::get('/dashboard', function () {
+//     return view('dashboard');
+// })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -27,14 +27,16 @@ Route::middleware('auth')->group(function () {
 });
 
 Route::group([
-    'middleware' => 'api',
     'prefix' => '/'
 ], function ($router) {
     Route::get('/', [ProductController::class, 'index'])->name('product.index');
-    // Route::post('/', [ProductController::class, 'store'])->name('product.store');
-    // Route::get('/{product}', [ProductController::class, 'show'])->name('product.show');
-    // Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update');
-    // Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.destroy');
+    Route::get('/dashboard', [ProductController::class, 'dashboard'])->name('product.dashboard')->middleware('auth');
+    Route::get('/create', [ProductController::class, 'create'])->name('product.create')->middleware('auth');
+    Route::post('/', [ProductController::class, 'store'])->name('product.store')->middleware('auth');
+    Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
+    Route::get('/edit/{product}', [ProductController::class, 'edit'])->name('product.edit');
+    Route::patch('/{product}', [ProductController::class, 'update'])->name('product.update')->middleware('auth');
+    Route::delete('/{product}', [ProductController::class, 'destroy'])->name('product.destroy')->middleware('auth');
 });
 
 require __DIR__ . '/auth.php';

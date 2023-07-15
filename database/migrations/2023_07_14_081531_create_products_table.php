@@ -15,11 +15,10 @@ return new class extends Migration
             $table->uuid('id')->primary();
             $table->string("name");
             $table->string("price");
-            $table->string("return_date");
             $table->integer("qty");
             $table->string("image_1");
-            $table->string("image_2");
-            $table->string("image_3");
+            $table->string("image_2")->nullable();
+            $table->string("image_3")->nullable();
             $table->text("desc");
             $table->uuid("category_id");
             $table->foreign("category_id")->references('id')->on('categories')->onDelete('cascade')
