@@ -18,11 +18,11 @@ class OrderController extends Controller
     {
         $this->authorize('create-update-delete-orders');
         $orders = DB::table('orders')
-            ->join('order_detail', 'order_detail.user_id', '=', 'orders.user_id')
             ->join('products', 'products.id', '=', 'orders.product_id')
+            // ->join('order_detail', 'order_detail.user_id', '=', 'orders.user_id')
             ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
             ->where('orders.user_id', Auth::user()->id)
-            ->where('order_detail.status', 0)
+            ->where('orders.status', 0)
             ->get();
         return view('orders.index', compact('orders'));
     }
@@ -35,7 +35,7 @@ class OrderController extends Controller
             ->join('products', 'products.id', '=', 'orders.product_id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
-            ->get();
+            ->paginate(7);
 
         return view('orders.dashboard', compact('orders'));
     }
@@ -104,6 +104,7 @@ class OrderController extends Controller
             ),
         );
 
+        $order = Order::where('user_id', Auth::user()->id)->update(['status' => 1]);
         $orderDetailUpdate = OrderDetail::find($orderDetail->id);
         $orderDetailUpdate->update(['status' => 1]);
 

@@ -110,6 +110,7 @@
 
                                     </tbody>
                                     <!-- BODY end -->
+                                    {{ $orders->links() }}
                                 </table>
 
                             </div>

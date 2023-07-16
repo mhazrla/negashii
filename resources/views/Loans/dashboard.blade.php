@@ -69,7 +69,7 @@
                                                 Name
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
-                                                Price/day
+                                                Rent Date
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
                                                 Qty
@@ -77,7 +77,7 @@
                                             <th class="px-6 py-3 text-left font-medium">
                                                 Category
                                             </th>
-                                            <th class="px-6 py-3 text-left font-medium">
+                                            <th class="px-6 py-3 text-left font-medium"> Status
                                             </th>
                                         </tr>
                                     </thead>
@@ -101,12 +101,12 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">
-                                                        {{ $loan->name }}
+                                                        {{ $loan->p_name }}
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">
-                                                        {{ $loan->price }}
+                                                        {{ $loan->rent_date }}
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -116,30 +116,21 @@
                                                 </td>
                                                 <td
                                                     class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    {{ $loan->category->name }}
-                                                </td>
+                                                    {{ $loan->c_name }}
                                                 <td
-                                                    class="px-6 py-4  whitespace-no-wrap text-right border-b border-gray-200 text-sm leading-5 font-medium">
-                                                    <a href="{{ route('product.show', $product->id) }}"
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline">
-                                                        Show
-                                                    </a>
-                                                    <a href="{{ route('product.edit', $product->id) }}"
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-yellow-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline">
-                                                        Edit
-                                                    </a>
-
-                                                    <form method="POST"
-                                                        class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
-                                                        action="{{ route('product.destroy', $product->id) }}"
-                                                        onsubmit="return confirm('Are you sure want to delete this data?')">
-                                                        @csrf
-                                                        @method('DELETE')
-                                                        <button type="submit" class="btn btn-sm ">
-                                                            Delete
-                                                        </button>
-                                                    </form>
+                                                    class=" py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
+                                                    @if ($loan->is_returned === 0)
+                                                        <a
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline">
+                                                            Not Returned
+                                                        </a>
+                                                    @else
+                                                        <a
+                                                            class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-green-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline">Returned
+                                                        </a>
+                                                    @endif
                                                 </td>
+
                                             </tr>
                                         @empty
                                             <tr>
@@ -153,6 +144,7 @@
 
                                     </tbody>
                                     <!-- BODY end -->
+                                    {{ $loans->links() }}
                                 </table>
                             </div>
                         </div>

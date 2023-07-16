@@ -38,49 +38,47 @@
                                                 Qty
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
-                                                Day
+                                                Rent Date
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
-                                                Total Price
+                                                Have to Return at
                                             </th>
+
                                             <th class="px-6 py-3 text-left font-medium">
                                                 Action
                                             </th>
                                         </tr>
                                     </thead>
                                     <tbody class="bg-white">
-                                        @php
-                                            $sum = 0;
-                                        @endphp
+
                                         @forelse ($loans as $item)
-                                            @php
-                                                $sum += $item->t_price;
-                                            @endphp
                                             <tr>
 
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">
-                                                        {{ $item->p_name }}
+                                                        {{ $item->name }}
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <span class="text-sm leading-5 text-gray-900">
-                                                        {{ $item->quantity }}
+                                                        {{ $item->qty }}
                                                     </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <span class="text-sm leading-5 text-gray-900">
-                                                        {{ $item->days }}
+                                                        {{ date('d-m-Y', strtotime($item->rent_date)) }}
                                                     </span>
                                                 </td>
-                                                <td
-                                                    class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    Rp{{ number_format($item->t_price, 2) }}
+                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <span class="text-sm leading-5 text-gray-900">
+                                                        {{ date('d-m-Y', strtotime($item->return_date)) }}
+                                                    </span>
                                                 </td>
+
                                                 <td class="border-b border-gray-200">
                                                     <form method="POST"
                                                         class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
-                                                        action="{{ route('order.destroy', $item->o_id) }}"
+                                                        action="{{ route('order.destroy', $item->id) }}"
                                                         onsubmit="return confirm('Are you sure want to delete this data?')">
                                                         @csrf
                                                         @method('DELETE')

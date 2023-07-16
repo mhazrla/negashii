@@ -20,6 +20,7 @@ return new class extends Migration
             $table->integer("day");
             $table->integer("qty");
             $table->bigInteger("total_price");
+            $table->boolean("status")->default(0);
             $table->timestamps();
         });
     }

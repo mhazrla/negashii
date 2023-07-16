@@ -104,7 +104,7 @@
                                     </tbody>
                                     <!-- BODY end -->
                                 </table>
-                                @if ($orders)
+                                @if ($orders->count() !== 0)
                                     <div
                                         class="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 uppercase tracking-wider  hidden md:block h-10 rounded-b-lg border-l  border-r ">
                                         <div class="flex flex-col space-y-6 md:space-y-0 md:flex-row justify-between">
@@ -120,20 +120,20 @@
                                 @endif
 
                             </div>
-                            <div class="px-4 py-4 mx-auto flex flex-wrap">
-                                <div class="flex md:mt-4 mt-6">
-                                    <a href="{{ route('product.index') }}"
-                                        class="btn inline-flex text-white bg-red-500 border-0 py-1 px-4  focus:outline-none hover:bg-red-600 rounded">Back</a>
-                                    <form method="POST" action="{{ route('order.checkout') }}">
-                                        @csrf
-                                        <input type="hidden" name="total_price" value="{{ $sum }}">
-                                        <button type="submit"
-                                            class="btn inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded ml-4">
-                                            Checkout
-                                        </button>
-                                    </form>
+                            @if ($orders->count() != 0)
+                                <div class="px-4 py-4 mx-auto flex flex-wrap">
+                                    <div class="flex md:mt-4 mt-6">
+                                        <form method="POST" action="{{ route('order.checkout') }}">
+                                            @csrf
+                                            <input type="hidden" name="total_price" value="{{ $sum }}">
+                                            <button type="submit"
+                                                class="btn inline-flex text-white bg-indigo-500 border-0 py-1 px-4 focus:outline-none hover:bg-indigo-600 rounded ml-4">
+                                                Checkout
+                                            </button>
+                                        </form>
+                                    </div>
                                 </div>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
