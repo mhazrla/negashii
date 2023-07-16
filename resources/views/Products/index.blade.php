@@ -31,6 +31,37 @@
                 </div>
             </section>
         </div>
+
+
+        <div class="relative isolate px-6 pt-6 lg:px-8">
+
+            <section class="text-gray-600 body-font">
+                <div class="container px-5 py-24 mx-auto">
+                    <h2 class="my-6 text-3xl font-semibold text-gray-700 dark:text-gray-200">
+                        {{ __('Our Products') }}
+                    </h2>
+                    <div class="flex flex-wrap -m-4">
+                        @forelse ($products as $product)
+                            <div class="lg:w-1/4 md:w-1/2 p-4 w-full">
+                                <a class="block relative h-48 rounded overflow-hidden"
+                                    href="{{ route('product.show', $product->id) }}">
+                                    <img alt="ecommerce" class="object-cover object-center w-full h-full block"
+                                        src="{{ $product->image_1 }}">
+                                </a>
+                                <div class="mt-4">
+                                    <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
+                                        {{ $product->category->name }}</h3>
+                                    <h2 class="text-gray-900 title-font text-lg font-medium">{{ $product->name }}</h2>
+                                    <p class="mt-1">Rp{{ number_format($product->price, 2) }}</p>
+                                </div>
+                            </div>
+                        @empty
+                            No Product here
+                        @endforelse
+                    </div>
+                </div>
+            </section>
+        </div>
     </x-slot>
 
 

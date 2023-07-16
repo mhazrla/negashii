@@ -5,7 +5,10 @@ namespace App\Http\Controllers;
 use App\Http\Requests\ProductRequest;
 use App\Http\Requests\ProductUpdateRequest;
 use App\Models\Category;
+use App\Models\Loan;
+use App\Models\OrderDetail;
 use App\Models\Product;
+use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 
@@ -23,8 +26,11 @@ class ProductController extends Controller
         $this->authorize('create-update-delete-products');
 
         $products = Product::latest()->with('category')->get();
+        $orders = OrderDetail::where('status', 1)->get();
+        $loans = Loan::get();
+        $customers = User::where('role_id', 2)->get();
 
-        return view('products.dashboard', compact('products'));
+        return view('products.dashboard', compact(['products', 'orders', 'loans', 'customers']));
     }
 
     public function create()
@@ -67,6 +73,8 @@ class ProductController extends Controller
 
     public function edit(Product $product)
     {
+        $this->authorize('create-update-delete-products');
+
         $categories = Category::get();
 
         return view('products.edit', compact('product', 'categories'));
@@ -74,6 +82,7 @@ class ProductController extends Controller
 
     public function update(ProductUpdateRequest $request, Product $product)
     {
+        $this->authorize('create-update-delete-products');
 
         if ($request->has('image_1')) {
             !is_null($product->image_1) && Storage::delete($product->image_1);
@@ -98,6 +107,7 @@ class ProductController extends Controller
 
     public function destroy(Product $product)
     {
+        $this->authorize('create-update-delete-products');
 
         Storage::delete($product->image_1);
         if ($product->image_2) {

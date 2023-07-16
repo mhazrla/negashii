@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('loans', function (Blueprint $table) {
             $table->uuid('id')->primary();
             $table->uuid("user_id");
-            $table->foreign("user_id")->references('id')->on('users')->onDelete('cascade');
+            $table->foreign("user_id")->references('id')->on('users')->onDelete('cascade')->onUpdate('cascade');
             $table->uuid("product_id");
-            $table->foreign("product_id")->references('id')->on('products')->onUpdate('cascade');;
+            $table->foreign("product_id")->references('id')->on('products')->onDelete('cascade')->onUpdate('cascade');
             $table->string("rent_date");
             $table->string("return_date");
             $table->boolean("is_returned")->default(0);

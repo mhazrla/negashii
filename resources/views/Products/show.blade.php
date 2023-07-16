@@ -89,19 +89,20 @@
 
                         <p class="text-gray-500">{{ $product->desc }}</p>
 
-                        <form class="space-y-4 text-gray-700" method="post" action="{{ route('product.store') }}"
+                        <form class="space-y-4 text-gray-700" method="post" action="{{ route('order.store') }}"
                             enctype="multipart/form-data">
                             @csrf
+                            <input type="hidden" name="product_id" value="{{ $product->id }}">
                             <div class="flex py-4 space-x-4">
                                 <div class="relative">
                                     <div
                                         class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
                                         Qty</div>
 
-                                    <select
+                                    <select name="qty"
                                         class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
                                         @for ($i = 1; $i < 11; $i++)
-                                            <option value={{ $i }} name="qty">{{ $i }}
+                                            <option value={{ $i }}>{{ $i }}
                                             </option>
                                         @endfor
                                     </select>
@@ -118,7 +119,7 @@
                                     <div
                                         class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
                                         Day</div>
-                                    <select
+                                    <select name="day"
                                         class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
                                         @for ($i = 1; $i < 8; $i++)
                                             <option value={{ $i }} name="day">{{ $i }}
@@ -134,7 +135,7 @@
                                     </svg>
                                 </div>
 
-                                <button type="button"
+                                <button type="submit"
                                     class="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
                                     Add to Cart
                                 </button>

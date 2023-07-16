@@ -12,9 +12,27 @@
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
-                    <x-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
-                        {{ __('Dashboard') }}
-                    </x-nav-link>
+
+                    @auth()
+                        @if (Auth::user()->role_id === 1)
+                            <x-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
+                                {{ __('Dashboard') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('order.dashboard')" :active="request()->routeIs('order.dashboard')">
+                                {{ __('Ordered Item') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('loan.dashboard')" :active="request()->routeIs('loan.dashboard')">
+                                {{ __('Loan') }}
+                            </x-nav-link>
+                        @elseif(Auth::user()->role_id === 2)
+                            <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
+                                {{ __('My Order') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('loan.index')" :active="request()->routeIs('loan.index')">
+                                {{ __('My Items') }}
+                            </x-nav-link>
+                        @endif
+                    @endauth
                 </div>
             </div>
 
@@ -85,9 +103,29 @@
     <!-- Responsive Navigation Menu -->
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
-            <x-responsive-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
-                {{ __('Dashboard') }}
-            </x-responsive-nav-link>
+
+
+            @auth
+                @if (Auth::user()->role_id === 1)
+                    <x-responsive-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
+                        {{ __('Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('order.dashboard')" :active="request()->routeIs('order.dashboard')">
+                        {{ __('Ordered Item') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('loan.dashboard')" :active="request()->routeIs('loan.dashboard')">
+                        {{ __('Loan') }}
+                    </x-responsive-nav-link>
+                @elseif(Auth::user()->role_id === 2)
+                    <x-responsive-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
+                        {{ __('My Order') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('loan.index')" :active="request()->routeIs('loan.index')">
+                        {{ __('My Items') }}
+                    </x-responsive-nav-link>
+                @endif
+
+            @endauth
         </div>
 
         <!-- Responsive Settings Options -->
