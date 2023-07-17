@@ -16,9 +16,16 @@ class ProductController extends Controller
 {
     public function index()
     {
+        $sales = Product::with('sales')
+            ->leftJoin('orders', 'products.id', '=', 'orders.product_id')
+            ->selectRaw('products.*, COALESCE(sum(orders.qty),0) total')
+            ->groupBy('products.id')
+            ->orderBy('total', 'desc')
+            ->take(5)
+            ->get();
         $products = Product::latest()->get();
 
-        return view('products.index', compact('products'));
+        return view('products.index', compact('products', 'sales'));
     }
 
     public function dashboard()

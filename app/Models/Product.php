@@ -35,4 +35,9 @@ class Product extends Model
     {
         return $this->hasOne(Order::class);
     }
+
+    public function sales()
+    {
+        return $this->hasOne(Order::class);
+    }
 }

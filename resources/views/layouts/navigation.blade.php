@@ -24,12 +24,18 @@
                             <x-nav-link :href="route('loan.dashboard')" :active="request()->routeIs('loan.dashboard')">
                                 {{ __('Loan') }}
                             </x-nav-link>
+                            <x-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
+                                {{ __('Messenger') }}
+                            </x-nav-link>
                         @elseif(Auth::user()->role_id === 2)
                             <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
                                 {{ __('My Order') }}
                             </x-nav-link>
                             <x-nav-link :href="route('loan.index')" :active="request()->routeIs('loan.index')">
                                 {{ __('My Items') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
+                                {{ __('Messenger') }}
                             </x-nav-link>
                         @endif
                     @endauth
@@ -116,6 +122,9 @@
                     <x-responsive-nav-link :href="route('loan.dashboard')" :active="request()->routeIs('loan.dashboard')">
                         {{ __('Loan') }}
                     </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
+                        {{ __('Messenger') }}
+                    </x-responsive-nav-link>
                 @elseif(Auth::user()->role_id === 2)
                     <x-responsive-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
                         {{ __('My Order') }}
@@ -123,6 +132,9 @@
                     <x-responsive-nav-link :href="route('loan.index')" :active="request()->routeIs('loan.index')">
                         {{ __('My Items') }}
                     </x-responsive-nav-link>
+                    <x-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
+                        {{ __('Messenger') }}
+                    </x-nav-link>
                 @endif
 
             @endauth

@@ -28,7 +28,10 @@ class LoanController extends Controller
             ->select('products.image_1', 'categories.name as c_name', 'products.name as p_name', 'products.id as p_id', 'rent_date', 'is_returned', 'orders.qty', 'loans.id')
             // ->where('orders.user_id', 'loans.user_id')
             ->paginate(5);
-        return view('loans.dashboard', compact('loans'));
+
+        $returned = Loan::where('is_returned', 1)->get();
+        $notReturned = Loan::where('is_returned', 0)->get();
+        return view('loans.dashboard', compact('loans', 'returned', 'notReturned'));
     }
 
     public function returnItem(Loan $loan)

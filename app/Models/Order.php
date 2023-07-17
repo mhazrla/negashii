@@ -23,4 +23,10 @@ class Order extends Model
     {
         return $this->belongsTo(Product::class);
     }
+
+    public function favorite()
+    {
+
+        return $this->belongsTo(Product::class)->withTrashed();
+    }
 }
