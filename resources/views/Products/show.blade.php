@@ -71,7 +71,10 @@
                         <h2 class="mb-2 leading-tight tracking-tight font-bold text-gray-800 text-2xl md:text-3xl">
                             {{ $product->name }}</h2>
                         <p class="text-gray-500 text-sm"><a href="#"
-                                class="text-indigo-600 hover:underline">{{ $product->category->name }}</a></p>
+                                class="text-indigo-600 hover:underline">{{ $product->category->name }}</a>
+                            <a href="#" class="ml-5 text-gray-600 hover:underline">Available stock :
+                                {{ $product->qty }}</a>
+                        </p>
 
                         <div class="flex items-center space-x-4 my-4">
                             <div>
@@ -89,58 +92,61 @@
 
                         <p class="text-gray-500">{{ $product->desc }}</p>
 
-                        <form class="space-y-4 text-gray-700" method="post" action="{{ route('order.store') }}"
-                            enctype="multipart/form-data">
-                            @csrf
-                            <input type="hidden" name="product_id" value="{{ $product->id }}">
-                            <div class="flex py-4 space-x-4">
-                                <div class="relative">
-                                    <div
-                                        class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                                        Qty</div>
+                        @if (Auth::user()->role_id !== 1)
+                            <form class="space-y-4 text-gray-700" method="post" action="{{ route('order.store') }}"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <input type="hidden" name="product_id" value="{{ $product->id }}">
+                                <div class="flex py-4 space-x-4">
+                                    <div class="relative">
+                                        <div
+                                            class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
+                                            Qty</div>
 
-                                    <select name="qty"
-                                        class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
-                                        @for ($i = 1; $i < 11; $i++)
-                                            <option value={{ $i }}>{{ $i }}
-                                            </option>
-                                        @endfor
-                                    </select>
+                                        <select name="qty"
+                                            class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
+                                            @for ($i = 1; $i < 11; $i++)
+                                                <option value={{ $i }}>{{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
 
-                                    <svg class="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
+                                        <svg class="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        </svg>
+                                    </div>
+
+                                    <div class="relative">
+                                        <div
+                                            class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
+                                            Day</div>
+                                        <select name="day"
+                                            class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
+                                            @for ($i = 1; $i < 8; $i++)
+                                                <option value={{ $i }} name="day">{{ $i }}
+                                                </option>
+                                            @endfor
+                                        </select>
+
+                                        <svg class="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
+                                            xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+                                            stroke="currentColor">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                                d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
+                                        </svg>
+                                    </div>
+
+                                    <button type="submit"
+                                        class="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
+                                        Add to Cart
+                                    </button>
                                 </div>
+                            </form>
 
-                                <div class="relative">
-                                    <div
-                                        class="text-center left-0 pt-2 right-0 absolute block text-xs uppercase text-gray-400 tracking-wide font-semibold">
-                                        Day</div>
-                                    <select name="day"
-                                        class="cursor-pointer appearance-none rounded-xl border border-gray-200 pl-4 pr-8 h-14 flex items-end pb-1">
-                                        @for ($i = 1; $i < 8; $i++)
-                                            <option value={{ $i }} name="day">{{ $i }}
-                                            </option>
-                                        @endfor
-                                    </select>
-
-                                    <svg class="w-5 h-5 text-gray-400 absolute right-0 bottom-0 mb-2 mr-2"
-                                        xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
-                                        stroke="currentColor">
-                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                            d="M8 9l4-4 4 4m0 6l-4 4-4-4" />
-                                    </svg>
-                                </div>
-
-                                <button type="submit"
-                                    class="h-14 px-6 py-2 font-semibold rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white">
-                                    Add to Cart
-                                </button>
-                            </div>
-                        </form>
+                        @endif
 
                     </div>
                 </div>

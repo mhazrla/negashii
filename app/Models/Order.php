@@ -19,13 +19,8 @@ class Order extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function products()
+    public function product()
     {
-        return $this->belongsToMany(Product::class, 'orders', 'product_id');
-    }
-
-    public function getTotalPriceAttribute()
-    {
-        return $this->qty * $this->price;
+        return $this->belongsTo(Product::class);
     }
 }

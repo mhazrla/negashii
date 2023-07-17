@@ -11,6 +11,11 @@ class Loan extends Model
     use HasFactory, HasUuids;
 
     protected $fillable = [
-        'user_id', 'product_id', 'rent_date', 'return_date'
+        'user_id', 'product_id', 'rent_date', 'return_date', 'is_returned'
     ];
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
+    }
 }

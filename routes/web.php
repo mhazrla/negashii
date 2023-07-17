@@ -63,7 +63,7 @@ Route::group([
     Route::get('/dashboard', [LoanController::class, 'dashboard'])->name('loan.dashboard')->middleware('auth');
     // Route::post('/checkout', [OrderController::class, 'checkout'])->name('loan.checkout')->middleware('auth');
     // Route::get('/create', [OrderController::class, 'create'])->name('loan.create')->middleware('auth');
-    // Route::post('/', [OrderController::class, 'store'])->name('loan.store')->middleware('auth');
+    Route::post('/return/{loan}', [LoanController::class, 'returnItem'])->name('loan.return')->middleware('auth');
     // Route::get('/order/{order}', [OrderController::class, 'show'])->name('loan.show');
     // Route::get('/edit/{order}', [OrderController::class, 'edit'])->name('loan.edit');
     // Route::patch('/{order}', [OrderController::class, 'update'])->name('loan.update')->middleware('auth');

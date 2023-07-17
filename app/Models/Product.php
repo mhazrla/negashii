@@ -25,4 +25,14 @@ class Product extends Model
     {
         return $this->belongsToMany(User::class, 'orders', 'user_id');
     }
+
+    public function loans()
+    {
+        return $this->hasOne(Loan::class);
+    }
+
+    public function orders()
+    {
+        return $this->hasOne(Order::class);
+    }
 }

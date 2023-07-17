@@ -25,7 +25,7 @@ class ProductController extends Controller
     {
         $this->authorize('create-update-delete-products');
 
-        $products = Product::latest()->with('category')->paginate(10);
+        $products = Product::latest()->with('category')->paginate(5);
         $orders = OrderDetail::where('status', 1)->get();
         $loans = Loan::get();
         $customers = User::where('role_id', 2)->get();

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Loan;
+use App\Models\Product;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -12,13 +13,7 @@ class LoanController extends Controller
 {
     public function index()
     {
-        $loans = DB::table('loans')
-            ->join('orders', 'orders.user_id', '=', 'loans.user_id')
-            ->join('products', 'products.id', '=', 'orders.product_id')
-            ->select('*', 'orders.id as o_id')
-            ->where('orders.user_id', Auth::user()->id)
-            ->where('orders.status', 1)
-            ->get();
+        $loans = Loan::where('is_returned', 0)->where('user_id', Auth::user()->id)->with('product')->paginate(5);
         return view('loans.index', compact('loans'));
     }
 
@@ -32,7 +27,18 @@ class LoanController extends Controller
             ->join('categories', 'products.category_id', '=', 'categories.id')
             ->select('products.image_1', 'categories.name as c_name', 'products.name as p_name', 'products.id as p_id', 'rent_date', 'is_returned', 'orders.qty', 'loans.id')
             // ->where('orders.user_id', 'loans.user_id')
-            ->paginate(7);
+            ->paginate(5);
         return view('loans.dashboard', compact('loans'));
+    }
+
+    public function returnItem(Loan $loan)
+    {
+        $loan =  Loan::findOrFail($loan->id);
+        $product = Product::findOrFail($loan->product->id);
+        $newQty = $product->qty + $loan->product->orders->qty;
+        $product->update(['qty' => $newQty]);
+        $loan->update(['is_returned' => 1]);
+
+        return back()->with('status', 'Item has been returned.');
     }
 }

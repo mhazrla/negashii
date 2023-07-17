@@ -32,6 +32,9 @@
                                         <tr
                                             class="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 uppercase tracking-wider">
                                             <th class="px-6 py-3 text-left font-medium">
+                                                Thumbnail
+                                            </th>
+                                            <th class="px-6 py-3 text-left font-medium">
                                                 Name
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
@@ -53,15 +56,29 @@
 
                                         @forelse ($loans as $item)
                                             <tr>
+                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
 
+                                                    <div class="flex items-center">
+                                                        <div class="flex-shrink-0 h-10 w-10">
+                                                            <img class="h-10 w-10 rounded-full"
+                                                                src="{{ url('storage/' . $item->product->image_1) }}"
+                                                                alt="" />
+                                                        </div>
+                                                        <div class="ml-4">
+                                                            <div class="text-sm leading-5 font-medium text-gray-900">
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">
-                                                        {{ $item->name }}
+                                                        {{ $item->product->name }}
                                                     </div>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <span class="text-sm leading-5 text-gray-900">
-                                                        {{ $item->qty }}
+                                                        {{ $item->product->orders->qty }}
                                                     </span>
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
@@ -78,10 +95,9 @@
                                                 <td class="border-b border-gray-200">
                                                     <form method="POST"
                                                         class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full bg-red-100  mx-4 text-indigo-600 hover:text-indigo-900 focus:outline-none focus:underline"
-                                                        action="{{ route('order.destroy', $item->id) }}"
-                                                        onsubmit="return confirm('Are you sure want to delete this data?')">
+                                                        action="{{ route('loan.return', $item->id) }}"
+                                                        onsubmit="return confirm('Are you sure want to return this item?')">
                                                         @csrf
-                                                        @method('DELETE')
                                                         <button type="submit" class="btn btn-sm ">
                                                             Return
                                                         </button>
@@ -101,6 +117,7 @@
 
                                     </tbody>
                                     <!-- BODY end -->
+                                    {{ $loans->links() }}
                                 </table>
 
 

@@ -35,7 +35,7 @@ class OrderController extends Controller
             ->join('products', 'products.id', '=', 'orders.product_id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
-            ->paginate(7);
+            ->paginate(5);
 
         return view('orders.dashboard', compact('orders'));
     }
