@@ -63,10 +63,13 @@
                                         <tr
                                             class="bg-gray-50 border-b border-gray-200 text-xs leading-4 text-gray-500 uppercase tracking-wider">
                                             <th class="px-6 py-3 text-left font-medium">
+                                                Customer Name
+                                            </th>
+                                            <th class="px-6 py-3 text-left font-medium">
                                                 Thumbnail
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
-                                                Name
+                                                Product Name
                                             </th>
                                             <th class="px-6 py-3 text-left font-medium">
                                                 Rent Date
@@ -85,11 +88,21 @@
                                         @forelse ($loans as $loan)
                                             <tr>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">
+                                                        {{ $loan->product->orders->user->name }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
+                                                    <div class="text-sm leading-5 text-gray-900">
+                                                        {{ $loan->product->name }}
+                                                    </div>
+                                                </td>
+                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
 
                                                     <div class="flex items-center">
                                                         <div class="flex-shrink-0 h-10 w-10">
                                                             <img class="h-10 w-10 rounded-full"
-                                                                src="{{ url('storage/' . $loan->image_1) }}"
+                                                                src="{{ url('storage/' . $loan->product->image_1) }}"
                                                                 alt="" />
                                                         </div>
                                                         <div class="ml-4">
@@ -99,11 +112,7 @@
                                                     </div>
 
                                                 </td>
-                                                <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
-                                                    <div class="text-sm leading-5 text-gray-900">
-                                                        {{ $loan->p_name }}
-                                                    </div>
-                                                </td>
+
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <div class="text-sm leading-5 text-gray-900">
                                                         {{ $loan->rent_date }}
@@ -111,12 +120,12 @@
                                                 </td>
                                                 <td class="px-6 py-4 whitespace-no-wrap border-b border-gray-200">
                                                     <span class="text-sm leading-5 text-gray-900">
-                                                        {{ $loan->qty }}
+                                                        {{ $loan->product->orders->qty }}
                                                     </span>
                                                 </td>
                                                 <td
                                                     class="px-6 py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
-                                                    {{ $loan->c_name }}
+                                                    {{ $loan->product->category->name }}
                                                 <td
                                                     class=" py-4 whitespace-no-wrap border-b border-gray-200 text-sm leading-5 text-gray-500">
                                                     @if ($loan->is_returned === 0)

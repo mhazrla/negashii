@@ -17,13 +17,14 @@ class OrderController extends Controller
     public function index()
     {
         $this->authorize('create-update-delete-orders');
-        $orders = DB::table('orders')
-            ->join('products', 'products.id', '=', 'orders.product_id')
-            // ->join('order_detail', 'order_detail.user_id', '=', 'orders.user_id')
-            ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
-            ->where('orders.user_id', Auth::user()->id)
-            ->where('orders.status', 0)
-            ->get();
+        // $orders = DB::table('orders')
+        //     ->join('products', 'products.id', '=', 'orders.product_id')
+        //     // ->join('order_detail', 'order_detail.user_id', '=', 'orders.user_id')
+        //     ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
+        //     ->where('orders.user_id', Auth::user()->id)
+        //     ->where('orders.status', 0)
+        //     ->get();
+        $orders = Order::where('user_id', Auth::user()->id)->where('status', 0)->with('product')->get();
         return view('orders.index', compact('orders'));
     }
 
@@ -31,12 +32,10 @@ class OrderController extends Controller
     {
         $this->authorize('create-update-delete-products');
         $orders = DB::table('orders')
-            ->join('order_detail', 'order_detail.user_id', '=', 'orders.user_id')
             ->join('products', 'products.id', '=', 'orders.product_id')
             ->join('users', 'orders.user_id', '=', 'users.id')
             ->select('*', 'orders.user_id as id_user', 'orders.product_id as id_product', 'orders.qty as quantity', 'orders.day as days', 'orders.total_price as t_price',  'orders.id as o_id', 'products.id as p_id', 'products.name as p_name')
             ->paginate(5);
-
         return view('orders.dashboard', compact('orders'));
     }
 

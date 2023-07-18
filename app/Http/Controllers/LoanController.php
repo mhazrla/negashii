@@ -21,14 +21,7 @@ class LoanController extends Controller
     {
         $this->authorize('create-update-delete-products');
 
-        $loans = DB::table('loans')
-            ->join('orders', 'orders.user_id', '=', 'loans.user_id')
-            ->join('products', 'products.id', '=', 'orders.product_id')
-            ->join('categories', 'products.category_id', '=', 'categories.id')
-            ->select('products.image_1', 'categories.name as c_name', 'products.name as p_name', 'products.id as p_id', 'rent_date', 'is_returned', 'orders.qty', 'loans.id')
-            // ->where('orders.user_id', 'loans.user_id')
-            ->paginate(5);
-
+        $loans = Loan::with('product')->paginate(5);
         $returned = Loan::where('is_returned', 1)->get();
         $notReturned = Loan::where('is_returned', 0)->get();
         return view('loans.dashboard', compact('loans', 'returned', 'notReturned'));
