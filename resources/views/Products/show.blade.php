@@ -24,18 +24,18 @@
                             <div class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4">
                                 <div x-show="image === 1"
                                     class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                                    <img src="{{ url('storage/' . $product->image_1) }}" class="w-fit">
+                                    <img src="{{ url('storage/' . $product->image_1) }}" class="w-1/3">
                                 </div>
                                 @if ($product->image_2)
                                     <div x-show="image === 2"
                                         class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
-                                        <img src="{{ url('storage/' . $product->image_2) }}" class="w-fit">
+                                        <img src="{{ url('storage/' . $product->image_2) }}" class="w-1/3">
                                     </div>
                                 @else
                                     <div x-show="image === 2"
                                         class="h-64 md:h-80 rounded-lg bg-gray-100 mb-4 flex items-center justify-center">
                                         <img src="https://bodybigsize.com/wp-content/uploads/2020/02/noimage-10.png"
-                                            class="w-fit">
+                                            class="w-1/3">
                                     </div>
                                 @endif
 
@@ -92,7 +92,7 @@
 
                         <p class="text-gray-500">{{ $product->desc }}</p>
 
-                        @if (Auth::user()->role_id !== 1)
+                        @if (Auth::user() && Auth::user()->role_id !== 1)
                             <form class="space-y-4 text-gray-700" method="post" action="{{ route('order.store') }}"
                                 enctype="multipart/form-data">
                                 @csrf
