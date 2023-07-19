@@ -46,7 +46,7 @@
                                 <a class="block relative h-48 rounded overflow-hidden"
                                     href="{{ route('product.show', $product->id) }}">
                                     <img alt="ecommerce" class="object-cover object-center w-full h-full block"
-                                        src="{{ $product->image_1 }}">
+                                        src="{{ url('storage/' . $product->image_1) }}">
                                 </a>
                                 <div class="mt-4">
                                     <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
@@ -74,7 +74,7 @@
                                 <a class="block relative h-48 rounded overflow-hidden"
                                     href="{{ route('product.show', $product->id) }}">
                                     <img alt="ecommerce" class="object-cover object-center w-full h-full block"
-                                        src="{{ $product->image_1 }}">
+                                        src="{{ url('storage/' . $product->image_1) }}">
                                 </a>
                                 <div class="mt-4">
                                     <h3 class="text-gray-500 text-xs tracking-widest title-font mb-1">
