@@ -5,18 +5,35 @@
             <div class="flex">
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
-                    <x-nav-link :href="route('product.index')" class="text-red-500 text-xl">
+                    <x-nav-link :href="route('about')" class="text-red-500 text-xl">
                         {{ __('Negashii') }}
                     </x-nav-link>
                 </div>
 
                 <!-- Navigation Links -->
                 <div class="hidden space-x-8 sm:-my-px sm:ml-10 sm:flex">
+                    @guest
+                        <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
+                            {{ __('Products') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                            {{ __('Activities') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('achievement.index')" :active="request()->routeIs('achievement.index')">
+                            {{ __('Achievements') }}
+                        </x-nav-link>
 
+                    @endguest
                     @auth()
                         @if (Auth::user()->role_id === 1)
                             <x-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
                                 {{ __('Dashboard') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('activity.dashboard')" :active="request()->routeIs('activity.dashboard')">
+                                {{ __('Activity Dashboard') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('achievement.dashboard')" :active="request()->routeIs('achievement.dashboard')">
+                                {{ __('Achievement Dashboard') }}
                             </x-nav-link>
                             <x-nav-link :href="route('order.dashboard')" :active="request()->routeIs('order.dashboard')">
                                 {{ __('Ordered Item') }}
@@ -28,6 +45,15 @@
                                 {{ __('Messenger') }}
                             </x-nav-link>
                         @elseif(Auth::user()->role_id === 2)
+                            <x-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
+                                {{ __('Products') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                                {{ __('Activities') }}
+                            </x-nav-link>
+                            <x-nav-link :href="route('achievement.index')" :active="request()->routeIs('achievement.index')">
+                                {{ __('Achievements') }}
+                            </x-nav-link>
                             <x-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
                                 {{ __('My Order') }}
                             </x-nav-link>
@@ -39,6 +65,8 @@
                             </x-nav-link>
                         @endif
                     @endauth
+
+
                 </div>
             </div>
 
@@ -110,11 +138,32 @@
     <div :class="{ 'block': open, 'hidden': !open }" class="hidden sm:hidden">
         <div class="pt-2 pb-3 space-y-1">
 
+            @guest
+                <x-responsive-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
+                    {{ __('Products') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                    {{ __('Activity') }}
+                </x-responsive-nav-link>
+                <x-responsive-nav-link :href="route('achievement.index')" :active="request()->routeIs('achievement.index')">
+                    {{ __('Achievement') }}
+                </x-responsive-nav-link>
+
+                <x-responsive-nav-link :href="route('login')" :active="request()->routeIs('login')">
+                    {{ __('Login') }}
+                </x-responsive-nav-link>
+            @endguest
 
             @auth
                 @if (Auth::user()->role_id === 1)
                     <x-responsive-nav-link :href="route('product.dashboard')" :active="request()->routeIs('product.dashboard')">
                         {{ __('Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('activity.dashboard')" :active="request()->routeIs('activity.dashboard')">
+                        {{ __('Activity Dashboard') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('achievement.dashboard')" :active="request()->routeIs('achievement.dashboard')">
+                        {{ __('Achievement Dashboard') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('order.dashboard')" :active="request()->routeIs('order.dashboard')">
                         {{ __('Ordered Item') }}
@@ -126,15 +175,24 @@
                         {{ __('Messenger') }}
                     </x-responsive-nav-link>
                 @elseif(Auth::user()->role_id === 2)
+                    <x-responsive-nav-link :href="route('product.index')" :active="request()->routeIs('product.index')">
+                        {{ __('Products') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('activity.index')" :active="request()->routeIs('activity.index')">
+                        {{ __('Activity') }}
+                    </x-responsive-nav-link>
+                    <x-responsive-nav-link :href="route('achievement.index')" :active="request()->routeIs('achievement.index')">
+                        {{ __('Achievement') }}
+                    </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('order.index')" :active="request()->routeIs('order.index')">
                         {{ __('My Order') }}
                     </x-responsive-nav-link>
                     <x-responsive-nav-link :href="route('loan.index')" :active="request()->routeIs('loan.index')">
                         {{ __('My Items') }}
                     </x-responsive-nav-link>
-                    <x-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
+                    <x-responsive-nav-link :href="route('chatify')" :active="request()->routeIs('chatify')">
                         {{ __('Messenger') }}
-                    </x-nav-link>
+                    </x-responsive-nav-link>
                 @endif
 
             @endauth
